@@ -1,6 +1,6 @@
 #!/bin/bash
 ## Job Name
-#SBATCH --job-name=wos-largersample-distance
+#SBATCH --job-name=wos-largersample-undirected-distance
 ## Allocation Definition
 #SBATCH --account=stf
 #SBATCH --partition=stf
@@ -28,4 +28,4 @@
 #SBATCH --chdir=/gscratch/stf/jporteno/graph_tool_singularity
 
 module load singularity
-singularity exec graph-tool_latest.sif python test_graph_tool_largersample.py data/wos_dedup_coalesce_tsv/part-00000-3a9f3768-74d7-46f7-83b6-da30b9f63c90-c000.csv data/wos_largersample_dist_20190920 --undirected --debug >& data/wos_largersample_dist_20190920.log
+singularity exec graph-tool_latest.sif python test_graph_tool_largersample.py data/wos_dedup_coalesce_tsv/part-00000-3a9f3768-74d7-46f7-83b6-da30b9f63c90-c000.csv data/wos_largersample_undirected_dist_20190920 --undirected --debug >& data/wos_largersample_undirected_dist_20190920.log

@@ -66,7 +66,7 @@ def main(args):
     logger.debug("starting shortest path calculations...")
     if args.undirected is True:
         logger.debug("treating graph as undirected for shortest distance calculations")
-        directed = True
+        directed = False
     else:
         directed = None
 
