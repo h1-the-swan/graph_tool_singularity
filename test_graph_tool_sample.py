@@ -57,6 +57,7 @@ def main(args):
         fname_calc_times = os.path.join(outdir, 'calc_times_{:03}.csv'.format(i))
         if not os.path.exists(fname_calc_times):
             break
+        i += 1
     f_calc_times = open(fname_calc_times, 'w', buffering=1)
 
     sep = ','

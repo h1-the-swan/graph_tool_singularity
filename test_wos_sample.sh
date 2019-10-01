@@ -28,4 +28,4 @@
 #SBATCH --chdir=/gscratch/stf/jporteno/graph_tool_singularity
 
 module load singularity
-singularity exec graph-tool_latest.sif python test_graph_tool_sample.py data/wos_dedup_coalesce_tsv/part-00000-3a9f3768-74d7-46f7-83b6-da30b9f63c90-c000.csv data/wos_sample_dist_20190920 --undirected --debug >& data/wos_sample_dist_20190920.log
+singularity exec graph-tool_latest.sif python test_graph_tool_sample.py data/wos_dedup_coalesce_tsv/part-00000-3a9f3768-74d7-46f7-83b6-da30b9f63c90-c000.csv data/wos_sample_undirected_dist_20190920 --undirected --debug >& data/wos_sample_undirected_dist_20190920.log
