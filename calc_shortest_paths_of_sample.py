@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-DESCRIPTION = """Test calculating shortest path distances using graph-tool. Calculate shortest paths between a small number of sociology papers"""
+DESCRIPTION = """Calculate shortest paths between a sample of papers read from a file"""
 
 import sys, os, time
 from datetime import datetime
@@ -23,15 +23,6 @@ from graph_tool.topology import shortest_distance
 import pandas as pd
 import numpy as np
 
-WOS_IDS = [
-    'WOS:000362448400007',
-    'WOS:000294897600002',
-    'WOS:000328713500013',
-    'WOS:000300125300004',
-    'WOS:000298005700005',
-    'WOS:000290474700006'
-]
-
 def main(args):
     outdir = os.path.abspath(args.outdir)
     if not os.path.exists(outdir):
@@ -39,6 +30,11 @@ def main(args):
         os.mkdir(outdir)
     else:
         logger.debug("using output directory: {}".format(outdir))
+
+    logger.debug("loading file with sample IDs: {}".format(args.sample_ids))
+    df_samples = pd.read_csv(args.sample_ids, sep=',')
+    sample_ids = df_samples[args.id_colname]
+    logger.debug("there are {} samples total".format(len(sample_ids)))
 
     start = timer()
     logger.debug("loading graph from {}. This will take a while...".format(args.edges))
@@ -71,7 +67,7 @@ def main(args):
     else:
         directed = None
 
-    vertices_sample = [name_to_v[wos_id] for wos_id in WOS_IDS]
+    vertices_sample = [name_to_v[wos_id] for wos_id in sample_ids]
     logger.debug("number of sample vertices: {}".format(len(vertices_sample)))
 
     for i, source in enumerate(vertices_sample):
@@ -103,7 +99,9 @@ if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser(description=DESCRIPTION)
     parser.add_argument("edges", help="path to edges TSV (with header)")
+    parser.add_argument("sample_ids", help="path to file with sample IDs. CSV file (with header)")
     parser.add_argument("outdir", help="path to output directory (will be created)")
+    parser.add_argument("--id-colname", default='UID', help="column name for ID in the `sample_ids` file (default: 'UID')")
     parser.add_argument("--undirected", action='store_true', help="treat graph as undirected for shortest distance calculations")
     parser.add_argument("--debug", action='store_true', help="output debugging info")
     global args
@@ -116,3 +114,4 @@ if __name__ == "__main__":
     main(args)
     total_end = timer()
     logger.info('all finished. total time: {}'.format(format_timespan(total_end-total_start)))
+
